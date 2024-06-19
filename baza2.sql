@@ -101,7 +101,7 @@ BEGIN
   LOOP
     FETCH c_emp INTO v_name, v_surname, v_salary;
     EXIT WHEN c_emp%NOTFOUND;
-    DBMS_OUTPUT.PUT_LINE(v_name || ' ' || v_surname);
+    DBMS_OUTPUT.PUT_LINE(v_name || ' ' || v_surname || v_salary);
   END LOOP;
   CLOSE c_emp;
 END;
