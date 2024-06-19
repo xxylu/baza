@@ -1,16 +1,16 @@
---1
+--1 zwiększenie płacy
 UPDATE emp
 SET salary=salary + (SELECT AVG(salary)*1.10 FROM emp)
 WHERE salary < 4000;
---2
+--2 dodanie pracownika
 INSERT INTO emp
 VALUES(26,'Pachulski', 'Oliwier', '318696', TO_DATE('13-11-2019', 'DD-MM-YYYY'), NULL, 1, 'Stock Clerk', 32, 2500.56, NULL);
---3
+--3 usuwanie recordów
 DELETE FROM emp
 WHERE dept_id = 41 OR dept_id = 43;
---4
-Rename Dept to Nowe_dept;
---5
+--4 zmiana nazwy
+Alter table  Dept Rename to Nowe_dept;
+--5 utworzenie tabeli
 CREATE TABLE Pracownicy(
   pracownik_id number(10),
   imie varchar2(20),
@@ -19,32 +19,30 @@ CREATE TABLE Pracownicy(
   data_urodzenia date,
   zarobki number(8,2)
 )
---6
+--6 dodanie do kolumny
 ALTER TABLE pracownicy
 ADD 
 telefon varchar(50);
---7
+--7 modyfikowanie
 ALTER TABLE pracownicy
 MODIFY 
 telefon varchar2(15 char);
---8
+--8 dodanie ograniczenia
 ALTER TABLE pracownicy
 ADD CONSTRAINT 
 check_length CHECK (length(telefon)>=9);
---9
+--9 zmania nazwy kolumny
 ALTER TABLE pracownicy
 RENAME COLUMN telefon to telefon_sluzbowy;
---10
+--10 usuniecie kolumny
 ALTER TABLE pracownicy
 DROP COLUMN telefon_sluzbowy;
---11
+--11 wyświetlanie tabel
 SELECT table_name FROM user_tables;
---12
-DROP TABLE
-NOWE_DEPT;
---14
+--12 usuniecie tabeli
 DROP TABLE NOWE_DEPT;
-CREATE TABLE dept_kopia (
+--14
+CREATE TABLE dept(
   id number(7)
   CONSTRAINT dept_id_nn_new NOT NULL,
   name varchar2(25)
@@ -60,12 +58,12 @@ CREATE TABLE Pracownicy22(
   data_urodzenia DATE,
   zarobki NUMBER(8,2) NOT NULL CHECK(zarobki >=4800)
 );
---16
+--16 dodanie klucza głownego
 ALTER TABLE pracownicy 
 ADD CONSTRAINT pk PRIMARY KEY (pracownik_id);
---17
+--17 dodanie kolumny
 alter table Pracownicy22 add dept_id Number(7);
---18
+--18 dodanie klucza obcego za pomocą alter table
 ALTER TABLE pracownicy22
 ADD dept_id number(7,0)
 ADD CONSTRAINT fk_dept FOREIGN KEY (dept_id) REFERENCES dept (id);
@@ -79,13 +77,12 @@ Create table Pracownicy22(
 Id number constraint xd_pk primary key,
 Klucz number, constraint fk_dept_id foreign key(dept_id) references dept(id)
 );
---21
+--21 dodanie kolumny unique
 ALTER TABLE pracownicy22
 ADD pesel VARCHAR(11) UNIQUE;
 --22 usuniecie klucza obcego
 ALTER TABLE pracownicy22
 DROP CONSTRAINT fk_dept;
-
 --23 wyświetlanie
 SET SERVEROUTPUT ON;
 DECLARE 
